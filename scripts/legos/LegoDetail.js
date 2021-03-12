@@ -1,11 +1,21 @@
-import { invertColor } from './../helpers.js';
+import { invertColor, capitalize } from './../helpers.js';
 
 export const LegoDetail = (brick) => {
-
+  
   let block = `<section class="block-wrapper" style="background-color:#${brick.ColorHex}">
-              <h3>Name: ${brick.LegoName}</h3>
-              <div class="block-years">Manufactured ${brick.YearFrom} - ${brick.YearTo}</div>
-              `;
+  <h3>Name: ${capitalize(brick.LegoName)}</h3>
+  <div class="block-years">Manufactured ${brick.YearFrom} - ${brick.YearTo}</div>
+  
+  `;
+  const notes = brick.Notes;   
+  if (notes) {
+    let addNotes = `<div class="block-notes">Notes: ${notes}</div>
+                      </section>
+                    `;
+    block += addNotes;
+  }  else {
+    block += `</section>`;
+  }       
   const link = brick.ColorstreamLinkImage;
   if (link) {
     //true? wrap the block in an a tag
