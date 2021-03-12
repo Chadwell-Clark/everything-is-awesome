@@ -5,7 +5,11 @@ a {
 h1 {
   margin-bottom: 0;
 }
-
+select {
+  background:#EFEFEF;
+  border-radius: 3px;
+  padding: .075em;
+}
 small {
   margin-bottom: 1em;
 }
