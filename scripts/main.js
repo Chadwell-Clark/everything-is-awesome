@@ -11,11 +11,15 @@ navElement.addEventListener("click", (event) => {
     filterLegos("Green");
   } else if (event.target.id === "showAll") {
     makeLegoList(useLegos());
+  } else if (event.target.id === "legoIdSearchButton") {
+	const legoId = legoIdSearch.value;
+  	filterLegoId(legoId);
   }
+
 })
 
 // navElement.addEventListener("change", event => {
-// 	const legoMaterial = 
+// 	const legoMaterial = event.target.value
 
 navElement.addEventListener("change", event => {
 	switch (event.target.value) {
@@ -55,6 +59,14 @@ navElement.addEventListener("change", event => {
   }
 })
 
+navElement.addEventListener("keydown", event => {
+	if (event.key === "Enter") {
+		// if (event.target.id === "legoIdSearch") {
+      const legoId = event.target.value;
+      filterLegoId(legoId);
+    }
+})
+
 const filterLegos = (whatFilter) => {
 	const filterArray = useLegos().filter(singleLego => {
 		if (singleLego.LegoName.includes(whatFilter)) {
@@ -63,9 +75,36 @@ const filterLegos = (whatFilter) => {
 	})
 	makeLegoList(filterArray);
 }
+
 const filterLegoMaterial = (whatFilter) => {
   const filterArray = useLegos().filter((singleLego) => {
     if (singleLego.Material.includes(whatFilter)) {
+      return singleLego;
+    }
+  });
+  makeLegoList(filterArray);
+};
+
+const filterLegoId = (whatFilter) => {
+	const filterArray = useLegos().filter(singleLego => {
+		if (singleLego.LegoId === whatFilter) {
+			console.log(singleLego)
+			return singleLego;
+		} 
+	})
+	if (filterArray.length === 0) {
+		document.querySelector("#all-legos").innerHTML = `<h2>LegoId Search returned no results... Try again.</h2>`;
+		document.querySelector("#legoIdSearch").value = "";
+
+	} else {
+	makeLegoList(filterArray);
+	document.querySelector("#legoIdSearch").value = "";
+}
+}
+
+const filterLegos = (whatFilter) => {
+  const filterArray = useLegos().filter((singleLego) => {
+    if (singleLego.LegoName.includes(whatFilter)) {
       return singleLego;
     }
   });
