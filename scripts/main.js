@@ -18,46 +18,53 @@ navElement.addEventListener("click", (event) => {
 
 })
 
+document
+  .querySelector("#blocksByMaterial")
+  .addEventListener("change", (event) => {
+    // if (event.target.id === "#blocksByMaterial") {
+    const legoMaterial = event.target.value;
+    console.log(legoMaterial);
+    filterLegoMaterial(legoMaterial);
+    // }
+  });
 // navElement.addEventListener("change", event => {
-// 	const legoMaterial = event.target.value
-
-navElement.addEventListener("change", event => {
-	switch (event.target.value) {
-    case "Solid":
-      filterLegoMaterial("Solid");
-      break;
-    case "Transparent":
-      filterLegoMaterial("Transparent");
-      break;
-    case "Pearl":
-      filterLegoMaterial("Pearl");
-      break;
-    case "Chrome":
-      filterLegoMaterial("Chrome");
-      break;
-    case "Metallic":
-      filterLegoMaterial("Metallic");
-      break;
-    case "Milky":
-      filterLegoMaterial("Milky");
-      break;
-    case "Glitter":
-      filterLegoMaterial("Glitter");
-      break;
-    case "Speckle":
-      filterLegoMaterial("Speckle");
-      break;
-    case "Ink":
-      filterLegoMaterial("Ink");
-      break;
-    case "Process":
-      filterLegoMaterial("Process");
-      break;
-    case "Modulex":
-      filterLegoMaterial("Modulex");
-      break;
-  }
-})
+// 	console.log(event)
+// 	switch (event.target.value) {
+//     case "Solid":
+//       filterLegoMaterial("Solid");
+//       break;
+//     case "Transparent":
+//       filterLegoMaterial("Transparent");
+//       break;
+//     case "Pearl":
+//       filterLegoMaterial("Pearl");
+//       break;
+//     case "Chrome":
+//       filterLegoMaterial("Chrome");
+//       break;
+//     case "Metallic":
+//       filterLegoMaterial("Metallic");
+//       break;
+//     case "Milky":
+//       filterLegoMaterial("Milky");
+//       break;
+//     case "Glitter":
+//       filterLegoMaterial("Glitter");
+//       break;
+//     case "Speckle":
+//       filterLegoMaterial("Speckle");
+//       break;
+//     case "Ink":
+//       filterLegoMaterial("Ink");
+//       break;
+//     case "Process":
+//       filterLegoMaterial("Process");
+//       break;
+//     case "Modulex":
+//       filterLegoMaterial("Modulex");
+//       break;
+//   }
+// })
 
 navElement.addEventListener("keydown", event => {
 	if (event.key === "Enter") {
@@ -65,6 +72,11 @@ navElement.addEventListener("keydown", event => {
       const legoId = event.target.value;
       filterLegoId(legoId);
     }
+})
+
+document.querySelector("#sortByManufDate").addEventListener("change", event => {
+	console.log(event.target.value)
+	sortByDateOfManufacture(event.target.value);
 })
 
 const filterLegos = (whatFilter) => {
@@ -93,7 +105,9 @@ const filterLegoId = (whatFilter) => {
 		} 
 	})
 	if (filterArray.length === 0) {
-		document.querySelector("#all-legos").innerHTML = `<h2>LegoId Search returned no results... Try again.</h2>`;
+		document.querySelector(
+      "#all-legos"
+    ).innerHTML = `<h2>LegoId Search returned no results... Try again.</h2>`;
 		document.querySelector("#legoIdSearch").value = "";
 
 	} else {
@@ -102,14 +116,17 @@ const filterLegoId = (whatFilter) => {
 }
 }
 
-const filterLegos = (whatFilter) => {
-  const filterArray = useLegos().filter((singleLego) => {
-    if (singleLego.LegoName.includes(whatFilter)) {
-      return singleLego;
-    }
-  });
-  makeLegoList(filterArray);
-};
+const sortByDateOfManufacture = (whatFilter) => {
+  let compareDate = (a, b)  => {
+	return a.YearFrom - b.YearFrom;
+  }
+  if (whatFilter === "Ascending") {
+	  makeLegoList(useLegos().sort(compareDate))
+	} else {
+		makeLegoList(useLegos().sort(compareDate).reverse());
+  }
+  };
+
 
 
 const startEIA = () => {
