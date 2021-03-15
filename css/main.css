@@ -17,3 +17,7 @@ small {
 nav {
   margin-top: 1em;
 }
+.noResults {
+  max-width: 900px;
+  object-fit: contain;
+}
