@@ -107,7 +107,9 @@ const filterLegoId = (whatFilter) => {
 	if (filterArray.length === 0) {
 		document.querySelector(
       "#all-legos"
-    ).innerHTML = `<h2>LegoId Search returned no results... Try again.</h2>`;
+    ).innerHTML = `<h2>Lego Id Search returned no results... Try again Brick Lover.</h2>
+	<img class="noResults" src="../builders.jpg"> 
+	`;
 		document.querySelector("#legoIdSearch").value = "";
 
 	} else {
